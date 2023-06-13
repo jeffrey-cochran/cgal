@@ -129,4 +129,4 @@ BlinearPatchC3<R>::is_degenerate() const
 
 } //namespace CGAL
 
-#endif // CGAL_CARTESIAN_TRIANGLE_3_H
+#endif // CGAL_CARTESIAN_BILINEAR_PATCH_3_H
