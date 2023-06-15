@@ -23,13 +23,12 @@
 namespace CGAL {
 
 template <class R_>
-class BlinearPatchC3
+class BilinearPatchC3
 {
   typedef typename R_::FT                   FT;
   typedef typename R_::Point_3              Point_3;
   typedef typename R_::Vector_3             Vector_3;
   typedef typename R_::Plane_3              Plane_3;
-  typedef typename R_::Triangle_3           Triangle_3;
   typedef typename R_::Tetrahedron_3        Tetrahedron_3;
 
   typedef std::array<Point_3, 4>                    Rep;
@@ -38,28 +37,27 @@ class BlinearPatchC3
   Base base;
 
 public:
-  typedef R_                                     R;
+  typedef R_ R;
 
-  BlinearPatchC3() {}
+  BilinearPatchC3() {}
 
-  BlinearPatchC3(const Point_3 &p, const Point_3 &q, const Point_3 &r, const Poin_3 &s)
+  BilinearPatchC3(const Point_3 &p, const Point_3 &q, const Point_3 &r, const Poin_3 &s)
     : base(CGAL::make_array(p, q, r, s)) {}
 
-  bool  operator==(const BlinearPatchC3 &bp) const;
-  bool  operator!=(const BlinearPatchC3 &bp) const;
+  bool  operator==(const BilinearPatchC3 &bp) const;
+  bool  operator!=(const BilinearPatchC3 &bp) const;
 
-  bool  has_on(const Point_3 &p) const;
+  // bool  has_on(const Point_3 &p) const;
   bool  is_degenerate() const;
 
   const Point_3 & vertex(int i) const;
   const Point_3 & operator[](int i) const;
-
-  FT    squared_area() const;
+  const Tetrahedron_3 & tetrahedron() const;
 };
 
 template < class R >
 bool
-BlinearPatchC3<R>::operator==(const BlinearPatchC3<R> &bp) const
+BilinearPatchC3<R>::operator==(const BilinearPatchC3<R> &bp) const
 {
   if (CGAL::identical(base, bp.base))
       return true;
@@ -77,14 +75,14 @@ BlinearPatchC3<R>::operator==(const BlinearPatchC3<R> &bp) const
 template < class R >
 inline
 bool
-BlinearPatchC3<R>::operator!=(const BlinearPatchC3<R> &bp) const
+BilinearPatchC3<R>::operator!=(const BilinearPatchC3<R> &bp) const
 {
   return !(*this == bp);
 }
 
 template < class R >
-const typename BlinearPatchC3<R>::Point_3 &
-BlinearPatchC3<R>::vertex(int i) const
+const typename BilinearPatchC3<R>::Point_3 &
+BilinearPatchC3<R>::vertex(int i) const
 {
   if (i<0) i=(i%4)+4;
   else if (i>3) i=i%4;
@@ -96,33 +94,25 @@ BlinearPatchC3<R>::vertex(int i) const
 
 template < class R >
 inline
-const typename BlinearPatchC3<R>::Point_3 &
-BlinearPatchC3<R>::operator[](int i) const
+const typename BilinearPatchC3<R>::Point_3 &
+BilinearPatchC3<R>::operator[](int i) const
 {
   return vertex(i);
 }
 
 // template < class R >
-// CGAL_KERNEL_MEDIUM_INLINE
-// typename BlinearPatchC3<R>::FT
-// BlinearPatchC3<R>::squared_area() const
+// inline
+// bool
+// BilinearPatchC3<R>::
+// has_on(const typename BilinearPatchC3<R>::Point_3 &p) const
 // {
-//   return internal::squared_area(vertex(0), vertex(1), vertex(2), R());
+//   return R().has_on_3_object()
+//                (static_cast<const typename R::BilinearPatchC3&>(*this), p);
 // }
 
 template < class R >
-inline
 bool
-BlinearPatchC3<R>::
-has_on(const typename BlinearPatchC3<R>::Point_3 &p) const
-{
-  return R().has_on_3_object()
-               (static_cast<const typename R::BlinearPatchC3&>(*this), p);
-}
-
-template < class R >
-bool
-BlinearPatchC3<R>::is_degenerate() const
+BilinearPatchC3<R>::is_degenerate() const
 {
   return (collinear(vertex(0),vertex(1),vertex(2)) && collinear(vertex(1),vertex(2),vertex(3)));
 }

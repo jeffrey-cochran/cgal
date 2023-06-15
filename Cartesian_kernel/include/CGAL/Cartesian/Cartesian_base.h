@@ -40,6 +40,7 @@
 #include <CGAL/Cartesian/basic_constructions_2.h>
 
 #include <CGAL/Cartesian/Point_3.h>
+#include <CGAL/Cartesian/Bilinear_patch_3.h>
 #include <CGAL/Cartesian/Weighted_point_3.h>
 #include <CGAL/Cartesian/Vector_3.h>
 #include <CGAL/Cartesian/Direction_3.h>
@@ -120,6 +121,7 @@ struct Cartesian_base
     typedef Weighted_pointC2<Kernel>                    Weighted_point_2;
 
     typedef PointC3<Kernel>                             Point_3;
+    typedef BiLinear
     typedef VectorC3<Kernel>                            Vector_3;
     typedef DirectionC3<Kernel>                         Direction_3;
     typedef LineC3<Kernel>                              Line_3;

@@ -3701,6 +3701,7 @@ namespace CommonKernelFunctors {
   class Is_degenerate_3
   {
     typedef typename K::Iso_cuboid_3      Iso_cuboid_3;
+    typedef typename K::Bilinear_patch_3  Bilinear_patch_3;
     typedef typename K::Line_3            Line_3;
     typedef typename K::Circle_3          Circle_3;
     typedef typename K::Plane_3           Plane_3;
@@ -3711,6 +3712,10 @@ namespace CommonKernelFunctors {
     typedef typename K::Tetrahedron_3     Tetrahedron_3;
   public:
     typedef typename K::Boolean           result_type;
+
+    result_type
+    operator()( const Bilinear_patch_3& bp) const
+    { return bp.rep().is_degenerate(); }
 
     result_type
     operator()( const Iso_cuboid_3& c) const
